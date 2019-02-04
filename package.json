@@ -1,0 +1,11 @@
+{
+  "name": "blocipedia2",
+  "version": "1.0.0",
+  "description": "build an application allows users to create, collaborate, and share wikis.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Victor Aragon",
+  "license": "ISC"
+}
