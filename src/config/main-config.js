@@ -18,7 +18,7 @@ module.exports = {
         app.use(logger('dev'));
         app.use(expressValidator());
         app.use(session({
-            secret: process.env.cookieSecret,
+            secret: 'Aragon',//process.env.cookieSecret,
             resave: false,
             saveUninitialized: false,
             cookie: { maxAge: 1.21e+9 } //set cookie to expire in 14 days
