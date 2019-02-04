@@ -2,10 +2,35 @@
   "name": "blocipedia2",
   "version": "1.0.0",
   "description": "build an application allows users to create, collaborate, and share wikis.",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"set NODE_ENV=test&& jasmine",
+    "start": "node src/server.js"
   },
   "author": "Victor Aragon",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "jasmine": "^3.3.1",
+    "request": "^2.88.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "markdown": "^0.5.0",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.8.0",
+    "pg-hstore": "^2.3.2",
+    "pug": "^2.0.3",
+    "sequelize": "^4.42.0",
+    "sequelize-cli": "^5.4.0",
+    "stripe": "^6.23.0"
+  }
 }
