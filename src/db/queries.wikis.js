@@ -8,6 +8,7 @@ module.exports ={
 		.then((wikis) => {
 			callback(null, wikis);
 		});
+
 	},
     addWiki(newWiki, callback) {
         return Wiki.create(newWiki)

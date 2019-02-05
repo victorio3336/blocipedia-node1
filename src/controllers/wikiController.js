@@ -1,7 +1,7 @@
-const wikiQueries = require("../db/queries.wikis");
+const wikiQueries = require("../db/queries.wikis.js");
 //const Authorizer = require("../policies/application.js");
 //const collaboratorQueries = require("../db/queries.collaborators")
-const userQueries = require("../db/queries.users");
+//const userQueries = require("../db/queries.users");
 //const markdown = require( "markdown" ).markdown;
 
 module.exports = {
@@ -10,7 +10,7 @@ module.exports = {
     if(err){
       res.redirect(500, "static/index");
     } else {
-      res.render("wikis/index", {wikis});
+      res.render("wikis/index", {Wikis});
     }
   })
 },

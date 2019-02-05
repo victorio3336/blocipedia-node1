@@ -4,7 +4,7 @@
   "description": "build an application allows users to create, collaborate, and share wikis.",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"set NODE_ENV=test&& jasmine",
+    "test": "export NODE_ENV=test&& jasmine",
     "start": "node src/server.js"
   },
   "author": "Victor Aragon",

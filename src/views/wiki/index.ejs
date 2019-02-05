@@ -9,6 +9,7 @@
        <h1 class="text-center">Wikis</h1>
        <% if(currentUser) {%>
         <a href="/wikis/new" class="btn btn-primary">New Wiki</a>
+        <% } %>
         <ul class="list-group">
         <% wikis.forEach((wiki) => { %>
       	  	<li class="list-group-item">
@@ -16,7 +17,8 @@
             </li>
           <% } %>
        <% }) %>
-         </ul>
+     </ul>
+
 
      </main>
   </body>
