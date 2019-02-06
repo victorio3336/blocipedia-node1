@@ -1,5 +1,7 @@
 const userQueries = require("../db/queries.users.js");
-
+const wikiQueries = require("../db/queries.wikis.js");
+const Wiki = require("../db/models/").Wiki;
+const User = require("../db/models/").User;
 const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
