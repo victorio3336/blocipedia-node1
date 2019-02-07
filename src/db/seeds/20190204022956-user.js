@@ -1,4 +1,4 @@
-''use strict';
+'use strict';
 
 const faker = require("faker");
 
@@ -21,6 +21,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-  return queryInterface.bulkDelete('Wikis', null, {})
+		return queryInterface.bulkDelete('Users', users, {});
   }
 };
