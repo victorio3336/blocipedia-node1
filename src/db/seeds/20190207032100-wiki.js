@@ -3,13 +3,14 @@
 const faker = require('faker');
 
 let wikis = [];
-for (let i = 1; i <= 50; i++) {
+for (let i = 1; i <= 20; i++) {
 	wikis.push({
 		title: faker.lorem.sentence(),
 		body: faker.lorem.sentence(),
 		private: faker.random.boolean(),
 		createdAt: new Date(),
 		updatedAt: new Date(),
+		userId: 5
 	});
 }
 
