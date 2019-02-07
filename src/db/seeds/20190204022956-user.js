@@ -6,9 +6,10 @@ let users = [];
 
 for(let i=0; i<10; i++){
   users.push({
-    username: faker.internet.userName(),
+  //  username: faker.internet.userName(),
     email: faker.internet.email(),
     password: faker.internet.password(),
+    role: "0",
     createdAt: new Date(),
     updatedAt: new Date()
   })
@@ -20,6 +21,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-  return queryInterface.bulkDelete('Users', users, {})
+  return queryInterface.bulkDelete('Wikis', null, {})
   }
 };
