@@ -47,7 +47,7 @@ show(req, res, next) {
        if (err || wiki == null) {
           res.redirect(404, "/");
        } else {
-          res.render("wiki/show", {wiki});
+          res.render("wikis/show", {wiki});
        }
     });
   },

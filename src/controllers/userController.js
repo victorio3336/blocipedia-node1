@@ -61,4 +61,40 @@ module.exports = {
         req.flash("Notice", "You've successfully signed out!")
         res.redirect("/")
     },
+    upgradePage(req, res, next){
+		res.render("users/upgrade");
+	},
+  upgrade(req, res, next){
+	 const stripe = require("stripe")("sk_test_tDdH3AmHyZo6r5AFiDvcSNxu");
+	 const token = req.body.stripeToken;
+	 const charge = stripe.charges.create({
+		 amount: 1500,
+		 currency: "usd",
+		 description: "Upgrade",
+		 source: token,
+		 statement_descriptor: 'Blocipedia Upgrade',
+		 capture: false,
+	 });
+	 userQueries.upgrade(req.params.id, (err, user) => {
+		 if(err && err.type ==="StripeCardError"){
+			 req.flash("notice", "Your payment was unsuccessful");
+			 res.redirect("/users/upgrade");
+		 } else{
+			 req.flash("notice", "Your payment was successful, you are now a Premium Member!");
+			 res.redirect(`/`);
+
+		 }
+	 }) ;
+ },
+
+ downgradePage(req, res, next) {
+	 res.render("users/downgrade");
+ },
+
+ 	downgrade(req, res, next) {
+	userQueries.downgrade(req.user.dataValues.id);
+	wikiQueries.privateToPublic(req.user.dataValues.id);
+	req.flash('notice', 'You are no longer a premium user and your private wikis are now public.');
+	res.redirect('/');
+},
   }

@@ -40,4 +40,39 @@ module.exports = {
           callback(err);
       });
     },
+    upgrade(id, callback){
+    return User.findByPk(id)
+    .then((user) => {
+      if(!user){
+        console.log("This is the user" + user);
+        return callback("User not found");
+      } else{
+        user.update({role: "premium"})
+        .then((user) => {
+          callback(null, user);
+        })
+        .catch((err) => {
+          callback(err);
+        })
+      }
+    });
+  },
+
+  downgrade(id, callback){
+    return User.findByPk(id)
+    .then((user) => {
+      if(!user){
+        return callback("User not found");
+      } else{
+        user.update({role:"standard"})
+        .then((user) => {
+          callback(null, user);
+        })
+        .catch((err) => {
+          callback(err);
+        })
+      }
+    });
+
+}
 }
