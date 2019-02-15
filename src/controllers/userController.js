@@ -11,12 +11,11 @@ module.exports = {
       res.render("users/signup");
     },
     create(req, res, next){
-        //#1
         let newUser = {
             username: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            passwordConfirmation: req.body.password_conf
+            passwordConfirmation: req.body.password_confirmation
         };
 
         userQueries.createUser(newUser, (err, user) => {
