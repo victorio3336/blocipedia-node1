@@ -4,11 +4,11 @@ const Wiki = require("../db/models/").Wiki;
 const User = require("../db/models/").User;
 const passport = require("passport");
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 
 module.exports = {
     signUp(req, res, next){
-      res.render("user/signup", {title: "Sign-Up"});
+      res.render("users/signup");
     },
     create(req, res, next){
         //#1
@@ -19,31 +19,31 @@ module.exports = {
             passwordConfirmation: req.body.password_conf
         };
 
-        let msg = {
-            to: newUser.email,
-            from: 'test@example.com',
-            subject: 'Sending with SendGrid is Fun',
-            text: 'and easy to do anywhere, even with Node.js',
-            html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-        };
         userQueries.createUser(newUser, (err, user) => {
-            if(err){
-                req.flash("error", err);
-                res.redirect("/users/signup");
-            } else {
-                passport.authenticate("local")(req, res, () => {
-                req.flash("notice", "You've successfully signed in!");
-                res.redirect("/");
-                })
-            }
-        });
-        sgMail.send(msg)
-        .catch((err) => {
-            console.log(err)
-        })
-    },
+			if(err){
+				req.flash("error", err);
+				res.redirect("/users/signup");
+			} else {
+				passport.authenticate("local")(req, res, () => {
+					req.flash("notice", "You've successfully signed in!");
+					sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+					const msg = {
+						to: user.email,
+						from: 'victoreagle33@gmail.com',
+						subject: 'The new Wiki',
+						text: 'the way to collaborate',
+						html: '<strong>Welcome to Blocipedia!</strong>',
+					};
+				 sgMail.send(msg);
+					res.redirect("/");
+				})
+			}
+		});
+		console.log(process.env.SENDGRID_API_KEY);
+	},
+
     signInForm(req, res, next){
-        res.render("user/signIn", {title: "Sign In"});
+        res.render("users/signin");
     },
     signIn(req, res, next){
         passport.authenticate("local")(req, res, function () {
