@@ -4,10 +4,10 @@ const userController = require("../controllers/userController");
 const validation = require("./validation")
 
 router.get("/users/signup", userController.signUp);
-router.post("/user", validation.validateUsers, userController.create);
+router.post("/users/signup", validation.validateNewUsers, userController.create);
 router.get("/users/signIn", userController.signInForm);
-router.post("/users/signIn", validation.validateUsers, userController.signIn);
-router.get("/users/signOut", userController.signOut);
+router.post("/users/signIn", validation.validateSigninUsers, userController.signIn);
+router.get("/users/signout", userController.signOut);
 router.get("/users/:id/downgrade", userController.downgradePage);
 router.post("/users/:id/downgrade", userController.downgrade);
 router.get("/users/:id/upgrade", userController.upgradePage);

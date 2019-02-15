@@ -1,4 +1,4 @@
-const User = require("../db/models").User;
+//const User = require("../db/models").User;
 
 module.exports = {
 
@@ -14,23 +14,44 @@ module.exports = {
 
       const errors = req.validationErrors();
 
-      const duplicate = User.findOne({
-        email: req.body.email
-      })
-      console.log("duplicate is...")
-      console.log(duplicate)
-      console.log("Duplicate end")
       if (errors) {
-        if(duplicate != null) {
-          console.log("if duplicate is null..")
-          console.log(duplicate)
-          req.flash("email has already been used", errors);
-          return res.redirect(req.headers.referer);
-        }
+        req.flash("error", errors);
+        return res.redirect(req.headers.referer);
+      } else {
+        return next();
+      }
+    },
+
+
+   validateSigninUsers(req, res, next) {
+    if(req.method === "POST") {
+      req.checkBody("email", "must be valid").isEmail();
+      req.checkBody("password", "must be at least 6 characters in length").isLength({min: 6});
+
+      const errors = req.validationErrors();
+
+      if (errors) {
         req.flash("error", errors);
         return res.redirect(req.headers.referer);
       } else {
         return next();
       }
     }
- }
+  },
+
+  validateWikis(req, res, next) {
+		if (req.method === 'POST') {
+			req.checkBody('title', 'must be at least 5 characters in length').isLength({ min: 5 });
+			req.checkBody('body', 'must be at least 10 characters in length').isLength({ min: 10 });
+		}
+
+		const errors = req.validationErrors();
+
+		if (errors) {
+			req.flash('error', errors);
+			return res.redirect(303, req.headers.referer);
+		} else {
+			return next();
+		}
+	},
+};

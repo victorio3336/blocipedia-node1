@@ -4,13 +4,13 @@ const bcrypt = require("bcryptjs");
 
 module.exports = {
 
-  findUser(username){
-    return User.all({
-      where: {
-        name: username
-      }
-    })
-  },
+  //findUser(username){
+  //  return User.all({
+//      where: {
+  //      name: username
+  //    }
+  //  })
+  //},
 
   createUser(newUser, callback){
     const salt = bcrypt.genSaltSync();
