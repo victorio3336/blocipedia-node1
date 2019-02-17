@@ -8,7 +8,7 @@ const sgMail = require('@sendgrid/mail');
 
 module.exports = {
     signUp(req, res, next){
-      res.render("users/signup");
+      res.render("user/signup");
     },
     create(req, res, next){
         let newUser = {
@@ -42,7 +42,7 @@ module.exports = {
 	},
 
     signInForm(req, res, next){
-        res.render("users/signin");
+        res.render("user/signIn");
     },
     signIn(req, res, next){
         passport.authenticate("local")(req, res, function () {
@@ -77,7 +77,7 @@ module.exports = {
 	 userQueries.upgrade(req.params.id, (err, user) => {
 		 if(err && err.type ==="StripeCardError"){
 			 req.flash("notice", "Your payment was unsuccessful");
-			 res.redirect("/users/upgrade");
+			 res.redirect("/user/upgrade");
 		 } else{
 			 req.flash("notice", "Your payment was successful, you are now a Premium Member!");
 			 res.redirect(`/`);
@@ -87,7 +87,7 @@ module.exports = {
  },
 
  downgradePage(req, res, next) {
-	 res.render("users/downgrade");
+	 res.render("user/downgrade");
  },
 
  	downgrade(req, res, next) {
