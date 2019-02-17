@@ -61,7 +61,7 @@ module.exports = {
         res.redirect("/")
     },
     upgradePage(req, res, next){
-		res.render("users/upgrade");
+		res.render("user/upgrade");
 	},
   upgrade(req, res, next){
 	 const stripe = require("stripe")("sk_test_tDdH3AmHyZo6r5AFiDvcSNxu");

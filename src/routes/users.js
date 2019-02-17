@@ -8,9 +8,9 @@ router.post("/user", validation.validateUsers, userController.create);
 router.get("/users/signIn", userController.signInForm);
 router.post("/users/signIn", validation.validateSigninUsers, userController.signIn);
 router.get("/users/signOut", userController.signOut);
-router.get("/users/:id/downgrade", userController.downgradePage);
-router.post("/users/:id/downgrade", userController.downgrade);
-router.get("/users/:id/upgrade", userController.upgradePage);
-router.post("/users/:id/upgrade", userController.upgrade);
+router.get("/users/downgrade", userController.downgradePage);
+router.post("/users/downgrade", userController.downgrade);
+router.get("/users/upgrade", userController.upgradePage);
+router.post("/users/upgrade", userController.upgrade);
 
 module.exports = router;
