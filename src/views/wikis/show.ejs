@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <% include ../static/partials/head.ejs %>
+    <%- include('../static/partials/head.ejs') -%>
   </head>
   <body>
-    <% include ../static/partials/navbar.ejs %>
+   <%- include('../static/partials/navbar.ejs') -%>
+   <main class="container">
+     <%- include('../static/partials/messages.ejs') -%>
+      <h1><%- wiki.title %></h1>
 
-    <main class="container">
-        <h1><%= wiki.title %></h1>
-        <% if(currentUser == undefined){ %>
-
-        <% } else if(currentUser.id == wiki.userId || currentUser.role == 2 || isCollaborator) { %>
-          <a href="/wikis/<%= wiki.id %>/collaborators" class="btn btn-primary">Collaborators</a>
-          <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
-          <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
-              <button type="submit" class="btn btn-danger">Delete</button>
+     <% if (currentUser) { %>
+      <a href="/wikis/<%= wiki.id %>/edit" class="btn btn-warning">Edit</a>
+       <% if(currentUser.id == wiki.userId || currentUser.isAdmin()) { %>
+         <form style="display:initial" action="/wikis/<%= wiki.id %>/destroy" method="post">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      <% } %>
+      <% if(currentUser.isPremium() || currentUser.isAdmin()) { %>
+        <% if(wiki.private == true) { %>
+          <form style="display:initial" action="/wikis" method="post">
+            <button type="submit" class="btn btn-info">Make Public</button>
           </form>
+        <% } else { %>
+        <form style="display:initial" action="/wikis/<%= wiki.id %>/private" method="post">
+          <button type="submit" class="btn btn-dark">Make Private</button>
+        </form>
         <% } %>
-        
-    </main>
-
-    <% include ../static/partials/baseScripts.ejs %>
-
-  </body>
-</html>
+      <% } %>
+    <% } %>
+      <p><%- wiki.body %></p>
+      <hr>

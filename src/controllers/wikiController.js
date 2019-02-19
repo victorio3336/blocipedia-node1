@@ -1,5 +1,5 @@
 const wikiQueries = require("../db/queries.wikis.js");
-//const Authorizer = require("../policies/application.js");
+const Authorizer = require("../db/policies/application.js");
 //const collaboratorQueries = require("../db/queries.collaborators")const userQueries = require("../db/queries.users");
 //const markdown = require( "markdown" ).markdown;
 const userQueries = require("../db/queries.users");
@@ -26,8 +26,8 @@ module.exports = {
 },
 
 create(req, res, next){
-//const authorized = new Authorizer(req.user).create();
-//if(authorized){
+const authorized = new Authorizer(req.user).create();
+if(authorized){
     let newWiki = {
     title: req.body.title,
     body:req.body.body,
@@ -41,25 +41,31 @@ create(req, res, next){
       res.redirect(303, `/wikis/${wiki.id}`);
     }
   });
-  },
+  }
+},
 show(req, res, next) {
     wikiQueries.getWiki(req.params.id, (err, wiki) => {
        if (err || wiki == null) {
           res.redirect(404, "/");
-       } else {
+       } else{
+       req.flash("notice", "You are not authorized to do that.");
           res.render("wikis/show", {wiki});
        }
-    });
-  },
+     });
+    },
+
 
 destroy(req, res, next){
       wikiQueries.deleteWiki(req, (err, topic) => {
           if(err){
               res.redirect(`/wikis/${wiki.id}`)
+              const authorized = new Authorizer (req.user,wiki).destroy();
+				if(authorized){
+				res.redirect(303,"/wikis")
            } else {
             req.flash("notice", "You are not authorized to perform that action");
    					res.redirect(303, "/wikis");
-
+          }
            }
        });
    },
@@ -82,5 +88,15 @@ update(req, res, next) {
            res.redirect(`/wikis/${req.params.id}`);
        }
      });
- }
+ },
+ privateIndex(req, res, next) {
+		wikiQueries.getAllWikis((err, wikis) => {
+			if (err) {
+				console.log('wikiController privateIndex error: ' + err);
+				res.redirect(500, 'static/index');
+			} else {
+				res.render('wikis/private', { wikis });
+			}
+		});
+	},
 }
