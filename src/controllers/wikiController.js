@@ -1,8 +1,7 @@
 const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../db/policies/application.js");
-//const collaboratorQueries = require("../db/queries.collaborators")const userQueries = require("../db/queries.users");
 //const markdown = require( "markdown" ).markdown;
-const userQueries = require("../db/queries.users");
+
 
 module.exports = {
   index(req, res, next){
@@ -41,6 +40,9 @@ if(authorized){
       res.redirect(303, `/wikis/${wiki.id}`);
     }
   });
+}{
+  req.flash("notice", "You are not authorized to do that.");
+			res.redirect("/wikis");
   }
 },
 show(req, res, next) {

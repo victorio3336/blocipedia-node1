@@ -6,9 +6,10 @@
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
+      
         <header class="jumbotron my-4">
-            <% if (currentUser) { %>
-                <h1 class="display-3"><%= currentUser.id %>, Upgrade your account!</h1>
+            <% if (currentUser.role == "standard") { %>
+                <h1 >Upgrade account</h1>
                 <p class="lead">Access to create private wikis.</p>
             <% } else { %>
                 <h1 class="display-3">You must be signed in to upgrade your account.</h1>
@@ -17,7 +18,7 @@
             <% } %>
         </header>
 
-        <% if(currentUser){ %>
+
       <form action="/users/<%= currentUser.id %>/upgrade" method="POST">
          <script
            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -31,7 +32,7 @@
            data-zip-code="true">
          </script>
        </form>
-      <% } %>
+
     </main>
      <%- include('../static/partials/baseScripts.ejs') -%>
    </body>
