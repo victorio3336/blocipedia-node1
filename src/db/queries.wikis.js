@@ -4,7 +4,7 @@ const User = require ('./models').User;
 module.exports ={
 
 	getAllWikis(callback){
-		return Wiki.all()
+		return Wiki.findAll()
 		.then((wikis) => {
 			callback(null, wikis);
 		});
@@ -61,7 +61,7 @@ module.exports ={
         })
         .catch((err) => {
            callback(err);
-        });
+        })
      },
 		 privateToPublic(id) {
 		return Wiki.findAll()

@@ -1,5 +1,5 @@
 const wikiQueries = require("../db/queries.wikis.js");
-const Authorizer = require("../db/policies/application.js");
+const Authorizer = require("../policies/application.js");
 const markdown = require( "markdown" ).markdown;
 
 
@@ -59,14 +59,17 @@ show(req, res, next) {
 
 
 destroy(req, res, next){
-      wikiQueries.deleteWiki(req, (err, topic) => {
+  let id = req.params.id;
+      wikiQueries.deleteWiki(req, (err, wiki) => {
           if(err){
-              res.redirect(`/wikis/${wiki.id}`)
+            console.log("ERROR:", err);
+              res.redirect(500, `/wikis/${wiki.id}`)
+            }else{
               const authorized = new Authorizer (req.user,wiki).destroy();
-				if(authorized){
+			if(authorized){
 				res.redirect(303,"/wikis")
            } else {
-            req.flash("notice", "You are not authorized to perform that action");
+          req.flash("notice", "You are not authorized to perform that action");
    					res.redirect(303, "/wikis");
           }
            }
@@ -76,11 +79,16 @@ destroy(req, res, next){
        wikiQueries.getWiki(req.params.id, (err, wiki) => {
          if(err || wiki == null) {
              res.redirect(404, "/wikis");
+           }else{
+             const authorized = new Authorizer(req.user, wiki).edit();
+		if(authorized){
+                  res.render("wikis/edit", {wiki});
     } else {
          req.flash('notice', 'You are not authorized to do that.');
          res.redirect(`/wikis/${req.params.id}`);
        }
-     })
+       }
+     });
    },
 
 update(req, res, next) {

@@ -22,7 +22,7 @@
             <button type="submit" class="btn btn-info">Make Public</button>
           </form>
         <% } else { %>
-        <form style="display:initial" action="/wikis/<%= wiki.id %>/private" method="post">
+        <form style="display:initial" action="/wikis/private" method="post">
           <button type="submit" class="btn btn-dark">Make Private</button>
         </form>
         <% } %>
