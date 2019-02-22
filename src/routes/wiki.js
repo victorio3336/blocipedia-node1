@@ -10,7 +10,7 @@ router.get("/wikis", wikiController.index);
 router.get("/wikis/:id", wikiController.show);
 router.get("/wikis/:id/edit", helper.ensureAuthenticated,wikiController.edit);
 router.post("/wikis/:id/update", wikiController.update);
-router.post("/wikis/1/destroy", helper.ensureAuthenticated,wikiController.destroy);
+router.post("/wikis/:id/destroy", wikiController.destroy);
 router.get("/wikis/private", wikiController.privateIndex);
 
 

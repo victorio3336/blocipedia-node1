@@ -48,4 +48,7 @@ destroy() {
       return this.new() &&
           this.record && (this._isOwner() || this._isAdmin());
   }
+	showCollaborators() {
+		return this.edit();
+	}
 };

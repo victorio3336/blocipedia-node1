@@ -1,5 +1,6 @@
 const Wiki = require ('./models').Wiki;
 const User = require ('./models').User;
+const Collaborator = require ("./models").Collaborator;
 
 module.exports ={
 
@@ -19,21 +20,27 @@ module.exports ={
             callback(err);
         });
     },
-    getWiki(id,callback) {
-        return Wiki.findById(id, {
-            include:[
-             {
-                model: User,
-             }
-            ],
-        })
-        .then((wiki) =>{
-            callback(null,wiki);
-        })
-        .catch((err) =>{
-            callback(err);
-        });
-    },
+		getWikis(id, callback) {
+         let result = {};
+         Wiki.findById(id)
+             .then((wiki) => {
+                 if (!wiki) {
+                     callback(404);
+                 } else {
+                     result["wiki"] = wiki;
+                     Collaborator.scope({
+                             method: ["collaboratorsFor", id]
+                         }).all()
+                         .then((collaborators) => {
+                             result["collaborators"] = collaborators;
+                             callback(null, result);
+                         })
+                         .catch((err) => {
+                             callback(err);
+                    })
+              }
+           })
+     },
     updateWiki(id, updatedWiki, callback){
         return Wiki.findById(id)
         .then((wiki) => {
