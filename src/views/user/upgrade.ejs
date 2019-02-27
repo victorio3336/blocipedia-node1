@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
   <% include ../static/partials/head.ejs %>
+</head>
   <body>
 
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
-      
-        <header class="jumbotron my-4">
+      <%- include('../static/partials/messages.ejs') -%>
             <% if (currentUser.role == "standard") { %>
                 <h1 >Upgrade account</h1>
-                <p class="lead">Access to create private wikis.</p>
-            <% } else { %>
-                <h1 class="display-3">You must be signed in to upgrade your account.</h1>
-                <br>
-                <a href="/users/signIn" class="btn btn-primary btn-lg">Sign In</a>
-            <% } %>
-        </header>
-
-
-      <form action="/users/<%= currentUser.id %>/upgrade" method="POST">
+                <hr>
+        <form action="/users/<%= currentUser.id %>/upgrade" method="POST">
          <script
            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
            data-key="pk_test_1L73P9ncuYkkaGcQ5ATK5Yxl"
@@ -32,7 +25,7 @@
            data-zip-code="true">
          </script>
        </form>
-
+ <% } %>
     </main>
      <%- include('../static/partials/baseScripts.ejs') -%>
    </body>

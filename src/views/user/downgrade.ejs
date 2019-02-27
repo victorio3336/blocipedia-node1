@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
   <% include ../static/partials/head.ejs %>
+</head>
   <body>
 
     <% include ../static/partials/navbar.ejs %>
 
     <main class="container">
-        <header class="jumbotron my-4">
-            <% if (currentUser && currentUser.role > 0) { %>
-                <h2 class="display-3"><%= currentUser.id %>, you can Downgrade your account below.</h2>
-                <p class="lead">All of your wikis will become public.</p>
-            <% } else { %>
-                <h1 class="display-3">You must be signed in to downgrade your account your account.</h1>
-                <a href="/users/signIn" class="btn btn-primary btn-lg">Sign In</a>
-            <% } %>
-        </header>
+        <%- include('../static/partials/messages.ejs') -%>
+            <% if(currentUser.role ==="premium") { %>
+              <h1>Downgrade Account</h1>
+    <hr>
 
-        <% if(currentUser){ %>
-            <form action="/users/downgrade" method="POST">
-                <input type="submit" value="Downgrade" class="btn btn-primary"/>
-            </form>
-        <% } %>
-      </main>
+    <form action="/users/<%=currentUser.id%>/downgrade" method="POST">
+    <button type="submit" class="btn btn-primary btn-lg">Downgrade Account</button>
+  </form>
+  <% } %>
+</main>
+ <%- include('../static/partials/baseScripts.ejs') -%>
+</body>
+</html>

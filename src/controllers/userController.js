@@ -103,7 +103,7 @@ showCollaborations(req, res, next) {
     if (err || user == null) {
       res.redirect(404, '/');
     } else {
-      res.render('users/collaborations', { user, collaborations });
+      res.render('user/collaborations', { user, collaborations });
     }
   });
 },
